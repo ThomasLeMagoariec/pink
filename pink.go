@@ -7,7 +7,13 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir(os.Args[1]))
+
+	dir, err_wd := os.Getwd()
+	if err_wd != nil {
+		log.Fatal(err_wd)
+	}
+
+	fs := http.FileServer(http.Dir(dir))
 
 	http.Handle("/", fs)
 
