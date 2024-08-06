@@ -8,6 +8,14 @@ import (
 
 func main() {
 
+	port := func() string {
+		if len(os.Args) == 2 {
+			return os.Args[1]
+		} else {
+			return "8080"
+		}
+	}()
+
 	dir, err_wd := os.Getwd()
 	if err_wd != nil {
 		log.Fatal(err_wd)
@@ -17,8 +25,8 @@ func main() {
 
 	http.Handle("/", fs)
 
-	log.Print("listening on port 8000")
-	err := http.ListenAndServe(":8080", nil)
+	log.Print("server started on port ", port)
+	err := http.ListenAndServe(":"+port, nil)
 
 	if err != nil {
 		log.Fatal(err)
